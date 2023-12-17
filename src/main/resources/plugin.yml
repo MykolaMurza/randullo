@@ -1,0 +1,4 @@
+name: randullo
+version: '${project.version}'
+main: ua.mykolamurza.randullo.Randullo
+api-version: '1.20'
