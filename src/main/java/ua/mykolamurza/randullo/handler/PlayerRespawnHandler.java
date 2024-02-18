@@ -81,9 +81,16 @@ public class PlayerRespawnHandler implements Listener {
     }
 
     private void preloadChunks(Location location) {
+        // The most important chunk to preload.
+        location.getWorld().getChunkAtAsync(location);
+        // Neighbour chunks to preload in radius of `radius`.
         int radius = 2;
         for (int dx = -radius; dx <= radius; dx++) {
             for (int dz = -radius; dz <= radius; dz++) {
+                if (dx == 0 && dz == 0) {
+                    // Preloaded first.
+                    continue;
+                }
                 int chunkX = location.getBlockX() >> 4 + dx;
                 int chunkZ = location.getBlockZ() >> 4 + dz;
                 location.getWorld().getChunkAtAsync(chunkX, chunkZ);
