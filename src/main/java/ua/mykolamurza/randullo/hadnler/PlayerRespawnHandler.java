@@ -16,6 +16,8 @@ import java.security.SecureRandom;
  * @author Mykola Murza
  */
 public class PlayerRespawnHandler implements Listener {
+    private static final SecureRandom RANDOM = new SecureRandom();
+
     @EventHandler
     public void onPlayerRespawn(PlayerRespawnEvent event) {
         Player player = event.getPlayer();
@@ -45,20 +47,19 @@ public class PlayerRespawnHandler implements Listener {
     }
 
     private Location findPlaceToSpawnPlayer(World world) {
-        SecureRandom random = new SecureRandom();
         double borderSize = world.getWorldBorder().getSize();
         double halfBorderSize = borderSize / 2;
 
-        Location location = generateRandomLocation(world, random, borderSize, (int) halfBorderSize);
-
+        Location location = generateRandomLocation(world, borderSize, (int) halfBorderSize);
+        world.getChunkAtAsync(location);
         checkIsLocationSafeAndMoveIfNot(location, world, location.getBlockX() >= 0);
 
         return location;
     }
 
-    private Location generateRandomLocation(World world, SecureRandom random, double borderSize, int halfBorderSize) {
-        double x = (int) (random.nextDouble() * borderSize) - halfBorderSize + 0.5;
-        double z = (int) (random.nextDouble() * borderSize) - halfBorderSize + 0.5;
+    private Location generateRandomLocation(World world, double borderSize, int halfBorderSize) {
+        double x = (int) (RANDOM.nextDouble() * borderSize) - halfBorderSize + 0.5;
+        double z = (int) (RANDOM.nextDouble() * borderSize) - halfBorderSize + 0.5;
         int y = getHighestBlockAt(world, x, z);
 
         return new Location(world, x, y, z);
@@ -74,7 +75,7 @@ public class PlayerRespawnHandler implements Listener {
         Material type = location.getBlock().getType();
         while (type == Material.LAVA || type == Material.LAVA_CAULDRON) {
             location.setX(isXPositive ? location.getX() - 10 : location.getX() + 10);
-            location.setY(world.getHighestBlockAt(location.getBlockX(), location.getBlockZ()).getY());
+            location.setY(getHighestBlockAt(world, location.getBlockX(), location.getBlockZ()));
             type = location.getBlock().getType();
         }
     }
