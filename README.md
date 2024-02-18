@@ -2,7 +2,7 @@
 
 ## Overview
 
-Randullo is a Minecraft plugin that teleports the player to a random place on the first join or respawn if there is no bed.
+Randullo is a Minecraft plugin that teleports the player to a random place on the first join or spawn after the death if there is no player's bed.
 
 This plugin is built with the Paper library and should be compatible with any server running Paper.
 
@@ -22,7 +22,7 @@ There is no configuration for this plugin enabled.
 
 ## Localization
 
-Randullo doesn't contain any localization. There are no messages to char from this plugin.
+Randullo doesn't contain any localization.
 
 ## Contributing
 
