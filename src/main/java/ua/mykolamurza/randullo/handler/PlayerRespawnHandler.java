@@ -1,4 +1,4 @@
-package ua.mykolamurza.randullo.hadnler;
+package ua.mykolamurza.randullo.handler;
 
 import org.bukkit.HeightMap;
 import org.bukkit.Location;
@@ -51,7 +51,7 @@ public class PlayerRespawnHandler implements Listener {
         double halfBorderSize = borderSize / 2;
 
         Location location = generateRandomLocation(world, borderSize, (int) halfBorderSize);
-        world.getChunkAtAsync(location);
+        preloadChunks(location);
         checkIsLocationSafeAndMoveIfNot(location, world, location.getBlockX() >= 0);
 
         return location;
@@ -77,6 +77,17 @@ public class PlayerRespawnHandler implements Listener {
             location.setX(isXPositive ? location.getX() - 10 : location.getX() + 10);
             location.setY(getHighestBlockAt(world, location.getBlockX(), location.getBlockZ()));
             type = location.getBlock().getType();
+        }
+    }
+
+    private void preloadChunks(Location location) {
+        int radius = 2;
+        for (int dx = -radius; dx <= radius; dx++) {
+            for (int dz = -radius; dz <= radius; dz++) {
+                int chunkX = location.getBlockX() >> 4 + dx;
+                int chunkZ = location.getBlockZ() >> 4 + dz;
+                location.getWorld().getChunkAtAsync(chunkX, chunkZ);
+            }
         }
     }
 }

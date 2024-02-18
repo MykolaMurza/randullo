@@ -2,7 +2,7 @@ package ua.mykolamurza.randullo;
 
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
-import ua.mykolamurza.randullo.hadnler.PlayerRespawnHandler;
+import ua.mykolamurza.randullo.handler.PlayerRespawnHandler;
 
 /**
  * Random teleport for players on respawn and for new players on first spawn.
