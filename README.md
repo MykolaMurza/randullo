@@ -1,4 +1,4 @@
-# Randullo - A Minecraft Random Teleport Plugin
+# Randullo - A Minecraft Random Teleport Plugin (RTP)
 
 ## Overview
 
